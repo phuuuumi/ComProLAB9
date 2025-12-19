@@ -3,9 +3,14 @@
 using namespace std;
 
 int main(){	
+	double init_loan, rate, ppy, next;
 	cout << "Enter initial loan: ";
+	cin >> init_loan;
 	cout << "Enter interest rate per year (%): ";
+	cin >> rate;
+	rate = rate * 0.01;
 	cout << "Enter amount you can pay per year: ";
+	cin >> ppy;
 
 	//use 'setw' to set width of table and 'left' to set left-alignment
 	//you can change input argument of 'setw()' to see the effect
@@ -20,14 +25,29 @@ int main(){
 	
 	//use 'fixed' and 'setprecision' to fix the number of decimal digits for displaying
 	//you can change input argument of 'setprecision()' to see the effect
-	cout << fixed << setprecision(2); 
-	cout << setw(13) << left << 1; 
-	cout << setw(13) << left << 1000.0;
-	cout << setw(13) << left << 50.0;
-	cout << setw(13) << left << 1050.0;
-	cout << setw(13) << left << 100.0;
-	cout << setw(13) << left << 950.0;
-	cout << "\n";	
+	double year = 1;
 	
+	while(init_loan > 0){
+		next = init_loan * (1 + rate) - ppy;
+		if(next < 0) {
+			ppy += next;
+			next = 0;
+		}
+
+		cout << fixed << setprecision(0); 
+		cout << setw(13) << left << year;
+		cout << fixed << setprecision(2); 
+		cout << setw(13) << left << init_loan;
+		cout << setw(13) << left << init_loan * rate;
+		cout << setw(13) << left << init_loan * (1 + rate);
+		cout << setw(13) << left << ppy;
+		cout << setw(13) << left << next;
+		cout << "\n";	
+
+		year++;
+		init_loan = next;
+
+	}
+
 	return 0;
 }
